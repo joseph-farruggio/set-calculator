@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Training Calculator</title>
+  <link rel="stylesheet" href="dist/stylesheet.css">
+  
+</head>
+<body class="bg-gray-100 p-4">
+  <div class="max-w-screen-sm mx-auto bg-white p-4 rounded-md" x-data="trainer">
+    <button @click="maxOpen = !maxOpen" class="bg-indigo-600 text-white px-3 py-2 rounded-sm">
+      <span x-text="maxOpen ? 'Hide' : 'Show'"></span> Max Weight
+    </button>
+    <!-- Set max -->
+    <div class="isolate -space-y-px rounded-md shadow-sm" x-show="maxOpen" x-collapse>
+      <div class="mt-4 relative border border-gray-300 rounded-md rounded-b-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+        <label for="name" class="block text-xs font-medium text-gray-700">Squat</label>
+        <input type="number" x-model="max.squat" class="block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" placeholder="0">
+      </div>
+      <div class="relative border border-gray-300  px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+        <label for="name" class="block text-xs font-medium text-gray-700">Bench</label>
+        <input type="number" x-model="max.bench" class="block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" placeholder="0">
+      </div>
+      <div class="relative border border-gray-300  px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+        <label for="name" class="block text-xs font-medium text-gray-700">Deadlift</label>
+        <input type="number" x-model="max.deadlift" class="block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" placeholder="0">
+      </div>
+      <div class="relative border border-gray-300 rounded-md rounded-t-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+        <label for="name" class="block text-xs font-medium text-gray-700">Overhead Press</label>
+        <input type="number" x-model="max.ohp" class="block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" placeholder="0">
+      </div>
+    </div>
+
+    <hr class="bg-gray-200 h-px my-4">
+
+    <!-- Add set -->
+    <div class="">     
+      <p class="mb-4">Add a set</p>
+      <div class="flex items-center space-x-4">
+        <div>
+          <label for="location" class="block text-sm font-medium text-gray-700">Select a movement</label>
+          <select x-model="movement" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+            <option value="squat">Squat</option>
+            <option value="bench">Bench</option>
+            <option value="deadlift">Deadlift</option>
+            <option value="ohp">Overhead Press</option>
+          </select>
+        </div>
+        <div>
+          <label for="percentage" class="block text-sm font-medium text-gray-700">Percentage</label>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input type="number" x-model="percentage" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="75">
+          </div>
+        </div>
+
+        <div>
+          <button type="button" @click="addSet()" class="inline-flex items-center mt-5 p-1.5 border border-transparent rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <!-- Heroicon name: solid/plus-sm -->
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <hr class="bg-gray-200 h-px my-4">
+
+    <!-- List sets -->
+    <div class="">
+      <div class="mb-4">Sets</div>
+      
+      <template x-for="(set, index) in sets">
+        <div class="relative pl-12 mb-5">
+          <button type="button" @click="removeSet(index)" class="absolute left-0 top-0 inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-gray-800 bg-gray-200 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" />
+            </svg>
+          </button>
+          <b x-text="set.movement"></b>: <span x-text="set.weight"></span># <span class="ml-4 text-gray-400" x-text="set.percentage"></span>
+        </div>
+      </template>
+    </div>
+
+  </div>
+
+  <script src="dist/app.js" defer></script>
+</body>
+</html>
